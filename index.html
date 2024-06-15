@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Real Estate for Dreamers</title>
+  <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">
+      <img src="assets/images/logo.png" alt="Logo" style="height: 40px; margin-right: 10px;">
+      Real Estate for Dreamers
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#buyer">Buying</a></li>
+        <li class="nav-item"><a class="nav-link" href="#seller">Selling</a></li>
+        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+        <li class="nav-item"><a class="nav-link" href="#testimonials">Testimonials</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div id="content" class="container mt-4">
+    <!-- Content will be dynamically loaded here -->
+  </div>
+
+  <footer class="footer bg-light text-center mt-5">
+    <div class="container">
+      <p class="text-muted">&copy; 2024 Real Estate for Dreamers</p>
+      <a href="https://www.facebook.com/p/Real-Estate-for-Dreamers-100079074604797" target="_blank" class="text-muted">
+        <i class="fab fa-facebook" style="font-size: 24px; margin: 0 10px;"></i>
+      </a>
+      <a href="https://www.instagram.com/realestatefordreamers/" target="_blank" class="text-muted">
+        <i class="fab fa-instagram" style="font-size: 24px; margin: 0 10px;"></i>
+      </a>
+      <a href="https://www.tiktok.com" target="_blank" class="text-muted">
+        <i class="fab fa-tiktok" style="font-size: 24px; margin: 0 10px;"></i>
+      </a>
+    </div>
+  </footer>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <script>
+    // Function to load content based on hash change (routing)
+    function loadContent() {
+      const hash = window.location.hash;
+      let url = 'home.html'; // Default content
+
+      switch (hash) {
+        case '#home':
+          url = 'home.html';
+          break;
+        case '#buyer':
+           url = 'buyer.html';
+           break
+        case '#seller':
+          url = 'seller.html';
+          break
+        case '#about':
+          url = 'about.html';
+          break;
+        case '#contact':
+          url = 'contact.html';
+          break;
+        case '#testimonials':
+          url = 'testimonials.html';
+          break;
+        default:
+          break;
+      }
+
+      // Fetch content and inject into #content div
+      fetch(url)
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById('content').innerHTML = data;
+        })
+        .catch(error => console.error('Error fetching content:', error));
+    }
+
+    // Load initial content based on current hash or default to home
+    window.addEventListener('DOMContentLoaded', loadContent);
+    window.addEventListener('hashchange', loadContent); // Listen for hash changes
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2.4.1/dist/email.min.js"></script>
+  <script>
+    // EmailJS initialization
+    emailjs.init('B6K6rdcZYWIyXl0nL'); // Replace 'YOUR_USER_ID' with your EmailJS user ID
+
+    function submitForm() {
+      const form = document.getElementById('contact-form');
+      
+      // Collect form data
+      const formData = {
+        name: form.name.value,
+        email: form.email.value,
+        message: form.message.value
+      };
+
+      // Send the email using EmailJS
+      emailjs.send('service_gt03cab', 'template_ioelegu', formData)
+        .then(function(response) {
+          // Show success message
+          document.getElementById('success-message').innerText = 'Your message has been sent successfully!';
+          document.getElementById('error-message').innerText = '';
+          form.reset(); // Reset the form
+        }, function(error) {
+          // Show error message
+          document.getElementById('error-message').innerText = 'Failed to send your message. Please try again later.';
+          document.getElementById('success-message').innerText = '';
+        });
+    }
+  </script>
+  
+</body>
+</html>
